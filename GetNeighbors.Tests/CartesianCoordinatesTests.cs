@@ -1,54 +1,64 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-#pragma warning disable CA1707
-
 namespace GetNeighbors.Tests
 {
-    [TestFixture] 
+    [TestFixture]
     public class CartesianCoordinatesTests
     {
         private Point[] points;
-        
+
         private static IEnumerable<TestCaseData> DataCases
         {
             get
             {
-                yield return new TestCaseData(new Point(3, 3), 2, new Point[]
-                {
-                    new Point(3, 4),
-                    new Point(4, 4),
-                    new Point(2, 3),
-                    new Point(2, 2),
-                    new Point(5, 2)
-                });
-                yield return new TestCaseData(new Point(3, 3), 1, new Point[]
-                {
-                    new Point(3, 4),
-                    new Point(4, 4),
-                    new Point(2, 3),
-                    new Point(2, 2)
-                });
-                yield return new TestCaseData(new Point(-2, -4), 3, new Point[]
-                {
-                    new Point(-2, -5),
-                    new Point(0, -3)
-                });
-                yield return new TestCaseData(new Point(-1, 10), 6, new Point[]
-                {
-                    new Point(-2, 5),
-                    new Point(3, 4),
-                    new Point(4, 4),
-                    new Point(0, 16)
-                });
+                yield return new TestCaseData(
+                    new Point(3, 3),
+                    2,
+                    new Point[]
+                    {
+                        new Point(3, 4),
+                        new Point(4, 4),
+                        new Point(2, 3),
+                        new Point(2, 2),
+                        new Point(5, 2),
+                    });
+                yield return new TestCaseData(
+                    new Point(3, 3),
+                    1,
+                    new Point[]
+                    {
+                        new Point(3, 4),
+                        new Point(4, 4),
+                        new Point(2, 3),
+                        new Point(2, 2),
+                    });
+                yield return new TestCaseData(
+                    new Point(-2, -4),
+                    3,
+                    new Point[]
+                    {
+                        new Point(-2, -5),
+                        new Point(0, -3),
+                    });
+                yield return new TestCaseData(
+                    new Point(-1, 10),
+                    6,
+                    new Point[]
+                    {
+                        new Point(-2, 5),
+                        new Point(3, 4),
+                        new Point(4, 4),
+                        new Point(0, 16),
+                    });
             }
         }
 
         [SetUp]
         public void Init()
         {
-            points = new Point[]
+            this.points = new Point[]
             {
                 new Point(-2, 5),
                 new Point(6, 6),
@@ -73,7 +83,7 @@ namespace GetNeighbors.Tests
                 new Point(0, -3),
                 new Point(-2, 0),
                 new Point(0, 0),
-                new Point(12, -2)
+                new Point(12, -2),
             };
         }
 
@@ -87,19 +97,21 @@ namespace GetNeighbors.Tests
         [Test]
         public void GetNeighbors_RangeLessOrEqualsZero_ThrowArgumentException()
         {
-            var point = new Point();
+            var point = default(Point);
             int range = -1;
-            Assert.Throws<ArgumentException>(() => CartesianCoordinates.GetNeighbors(point, range, this.points),
+            Assert.Throws<ArgumentException>(
+                () => CartesianCoordinates.GetNeighbors(point, range, this.points),
                 message: "Range cannot be less or equals zero.");
         }
 
         [Test]
         public void GetNeighbors_PointsIsEqualNull_ThrowArgumentNullException()
         {
-            var point = new Point();
+            var point = default(Point);
             int range = 1;
-            points = null;
-            Assert.Throws<ArgumentNullException>(() => CartesianCoordinates.GetNeighbors(point, range, this.points),
+            this.points = null;
+            Assert.Throws<ArgumentNullException>(
+                () => CartesianCoordinates.GetNeighbors(point, range, this.points),
                 message: "Points cannot be equals null.");
         }
     }
